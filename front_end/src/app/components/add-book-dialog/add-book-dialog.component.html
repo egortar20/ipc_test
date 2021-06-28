@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Добавление книги автору {{ author.name }}</h1>
+<form class="form" [formGroup]="addBookForm" (ngSubmit)="addBook()">
+
+  <div mat-dialog-content>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Имя автора</mat-label>
+      <input matInput placeholder="Ex. Pizza" value="{{ author.name }}" disabled>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Название книги</mat-label>
+      <input matInput placeholder="Война и Мир" formControlName="title">
+      <mat-error *ngIf="bookTitle.hasError('required')">
+        Название - <strong>обязательное</strong> поле
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Описание</mat-label>
+      <textarea matInput placeholder="Как жаль, что я так и не дочитал..." formControlName="description"></textarea>
+    </mat-form-field>
+
+    
+  </div>
+  <div mat-dialog-actions>
+    <button mat-stroked-button type="submit" [disabled]="!addBookForm.valid" color="primary">Добавать книгу</button>
+    <button mat-stroked-button [mat-dialog-close] cdkFocusInitial>Отмена</button>
+  </div>
+  
+</form> 
+

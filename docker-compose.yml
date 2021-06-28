@@ -1,0 +1,37 @@
+version: '2.1'
+
+services: 
+    mysql_database:
+        container_name: ipc_test_mysql
+        image: "mysql:latest"
+        environment: 
+            MYSQL_DATABASE: app_db
+            MYSQL_ROOT_PASSWORD: pass
+        ports: 
+         - 3306:3306
+        healthcheck:
+            test: ["CMD", "mysqladmin", "-uroot", "-ppass", "ping", "-h", "127.0.0.1"]
+            timeout: 20s
+            retries: 10
+
+    back_end:
+        container_name: ipc_test_back_end
+        build: ./back_end/
+        ports:
+         - 5555:5555
+        links: 
+            - mysql_database:mysql_database
+        depends_on: 
+            mysql_database:
+                condition: service_healthy
+    
+    front_end:
+        container_name: ipc_test_front_end
+        build: ./front_end/
+        ports: 
+         - 4200:4200
+        links:
+            - back_end:back_end
+        depends_on: 
+            mysql_database:
+                condition: service_healthy

@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Добавление автора</h1>
+<form class="form" [formGroup]="addAuthorForm" (ngSubmit)="addAuthor()">
+
+  <div mat-dialog-content>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Имя автора</mat-label>
+      <input matInput placeholder="Лев Толстой" formControlName="name">
+      <mat-error *ngIf="authorName.hasError('required')">
+        Имя автора - <strong>обязательное</strong> поле
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Сторана автора</mat-label>
+      <input matInput placeholder="Война и Мир" formControlName="country">
+      <mat-error *ngIf="authorCountry.hasError('required')">
+        Страна автора - <strong>обязательное</strong> поле
+      </mat-error>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button type="submit" [disabled]="!addAuthorForm.valid">Добавать автора</button>
+      <button mat-button [mat-dialog-close] cdkFocusInitial>Отмена</button>
+    </div>
+  </div>
+  
+</form> 
+
